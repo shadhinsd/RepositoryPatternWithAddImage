@@ -1,0 +1,74 @@
+﻿@model RepositoryWithAddImage.ViewModel.StudentVm
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>StudentVm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input type="file" name="photo" id="FileUpload" onchange="PreviewImage()" asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <img src="~/Image/student/@Model.Image" id="UploadFile" class="img-thumbnail" style="width:170px;" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RegistrationId" class="control-label"></label>
+                <input asp-for="RegistrationId" class="form-control" />
+                <span asp-validation-for="RegistrationId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        function PreviewImage() {
+            var preview = document.getElementById("UploadFile");
+            var fileInput = document.getElementById("FileUpload");
+
+            // Ensure that the file input has files
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result; // Set the source of the preview image to the base64-encoded image data
+                };
+
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    </script>
+}
